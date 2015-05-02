@@ -1,0 +1,39 @@
+<!doctype html>
+<html>
+	<head>
+		<meta http-equiv="content-type" content="text/html;charset=utf-8"/>
+		<script src="<%= sites.STATIC_JS_PATH %>lib/EventEmitter.js"></script>
+		<script src="<%= sites.STATIC_JS_PATH %>lib/windinsky.js"></script>
+		<script>
+			windinsky.cfg = {
+				JS_PATH:'<%= sites.STATIC_JS_PATH%>',
+				CSS_PATH:'<%= sites.STATIC_CSS_PATH%>'
+			}
+			function destroyLessCache(pathToCss) { // e.g. '/css/' or '/stylesheets/'
+			   for (var key in window.localStorage) {
+				  if (key.indexOf('.less') !== -1) {
+					 delete window.localStorage[key];
+				  }
+			   }
+			}
+			destroyLessCache();
+			var global = window;
+		</script>
+		<% (locals.__css || []).forEach(function(css){ %>
+		<link rel="stylesheet/less" type="text/css" href="<%= sites.STATIC_LESS_PATH + css %>.less"/>
+		<% }); %>
+		<%if(locals.useAutoSave){%>
+		<script src="<%= sites.STATIC_JS_PATH %>localstorage.js"></script>
+		<script>
+			var __localstorage_loaded = new EventEmitter();
+			windinsky.use('localstorage',function(){
+				global.ls = this['localstorage'];
+				global.AutoSave = global.ls.AutoSave;
+				AutoSave.init();
+				AutoSave.start();
+				__localstorage_loaded.emit('end');
+			});
+		</script>
+		<%}%>
+	</head>
+	<body>

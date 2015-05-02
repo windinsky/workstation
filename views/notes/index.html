@@ -1,0 +1,36 @@
+<%- include('../head.html',{locals:locals}); %>
+	<div class="container">
+		<div>
+			<div class="notes_list">
+				<div class="add"><span class="add_btn" id='add_new'>+</span></div>
+				<ul>
+					<% notes.forEach(function(note){ %>
+					<li id="note_<%= fake_id++ %>" data-id="<%=note.id%>">
+						<span><%= note.title %></span>
+						<span class="trash"></span>
+					</li>
+					<% }); %>
+				</ul>
+			</div>
+			<div class="notes_editor">
+				<input type="hidden" id="id"/>
+				<div class="title">
+					<input readonly type="text" id="title"/>
+				</div>
+				<div>
+					<textarea id="editor" name="editor"></textarea>
+				</div>
+			</div>
+		</div>
+	</div>
+	<script>
+		var notes = <%- JSON.stringify(notes || 'undefined') %>;
+		windinsky.use(['modules/ckeditor/ckeditor'],function(){
+			global.ckeditor = CKEDITOR.replace('editor');
+			ckeditor.on('instanceReady',function(){
+				ckeditor.setReadOnly(true);
+			})
+		});
+		windinsky.use('notes/list');
+	</script>
+<%- include('../foot.html',{locals:locals}); %>

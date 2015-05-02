@@ -1,0 +1,147 @@
+@pic_url: "http://static.windinsky.com/img/";
+body{
+	font-size:12px;
+	font-family:Lantinghei SC,arial,monaco;
+}
+body{
+	margin:0;padding:0;
+}
+.w(@width){
+	width:@width;
+}
+.h(@height){
+	height:@height;
+}
+.p(@padding){
+	padding:@padding;
+}
+.m(@margin){
+	margin:@margin;
+}
+.pl(@padding_left){
+	padding-left:@padding_left;
+}
+.pt(@padding_top){
+	padding-top:@padding_top;
+}
+.pr(@padding_right){
+	padding-right:@padding_right;
+}
+.pb(@pading_bottom){
+	padding-bottom:@padding_bottom;
+}
+
+.ml(@margin_left){
+	margin-left:@margin_left;
+}
+.mt(@margin_top){
+	margin-top:@margin_top;
+}
+.mr(@margin_right){
+	margin-right:@margin_right;
+}
+.mb(@pading_bottom){
+	margin-bottom:@margin_bottom;
+}
+
+.lh(@line_height){
+	line-height:@line_height;
+}
+.llh(@height){
+	height:@height;
+	line-height:@height;
+}
+.br(@radius){
+	border-radius:@radius;
+}
+
+.vt(){
+	vertical-align:top;
+}
+
+.vb(){
+	vertical-align:bottom;
+}
+
+.bg(@bg){
+	background:@bg;
+}
+.bc(@color){
+	background-color:@color;
+}
+.bp(@position){
+	background-position:@position;
+}
+.bs(@size){
+	background-size:@size;
+}
+.bi(@image){
+	background-image:url("@{pic_url}/@{image}");
+}
+
+.tc(){
+	text-align:center;
+}
+.tl(){
+	text-align:left;
+}
+.tr(){
+	text-align:right;
+}
+
+.pa(){
+	position:absolute;
+}
+.pf(){
+	position:fixed;
+}
+._pr(){
+	position:relative;
+}
+.no_repeat(){
+	background-repeat:no-repeat;
+}
+.repeat_x(){
+	background-repeat:repeat-x;
+}
+.repeat_y(){
+	background-repeat:repeat-y;
+}
+.repeat(){
+	background-repeat:repeat;
+
+}
+
+.c(@color){
+	color:@color;
+}
+
+.hidden(){
+	display:none;
+}
+.block(){
+	display:block;
+}
+.inline_block(){
+	display:inline-block;
+}
+.inline(){
+	display:inline;
+}
+
+.auto(){
+	margin:auto;
+}
+
+.b(@border){
+	border:@border;
+}
+.fs(@font_size){
+	font-size:@font_size;
+}
+.bolder(){
+	font-weight:bolder;
+}
+.pointer(){
+	cursor:pointer;
+}

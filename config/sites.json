@@ -1,0 +1,7 @@
+{
+	"STATIC_PATH":"http://static.windinsky.com/",
+	"STATIC_IMG_PATH":"http://static.windinsky.com/img/",
+	"STATIC_JS_PATH":"http://static.windinsky.com/js/",
+	"STATIC_CSS_PATH":"http://static.windinsky.com/css/",
+	"STATIC_LESS_PATH":"http://static.windinsky.com/less/"
+}

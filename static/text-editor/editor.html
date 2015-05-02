@@ -1,0 +1,144 @@
+<!doctype html>
+<html>
+	<head>
+		<meta http-equiv="content-type" content="text/html;charset=utf-8"/>
+		<style>
+			html,body{
+				height:100%;
+				width:100%;
+			}
+			body{
+				margin:0;padding:0;
+			}
+			#editor{
+				background:#000022;
+				color:white;
+				outline:none;
+				width:100%;
+				height:100%;
+			}
+		</style>
+		<script src="../js/jquery.js"></script>
+	</head>
+	<body>
+		<div id="editor"></div>
+		<script src="test.js"></script>
+		<script>
+			function fireCommand(command){
+				switch(command){
+					case 'setTextColor':
+						return setTextColor(arguments[1]);
+					case 'setTextFontFamily':
+						return setTextFontFamily(arguments[1]);
+					case 'setTextFontSize':
+						return setTextFontSize(arguments[1]);
+
+				}
+			}
+			var editor = document.getElementById('editor');
+			editor.contentEditable = true;
+			document.body.addEventListener('mouseup',getSelection,false);
+			document.body.addEventListener('keyup',getSelection,false);
+			var _$ = parent.$,_d = _$(parent.document);
+
+			function getSelection(){
+				_d.trigger('selectEnd',document.getSelection());
+			}
+			function setTextColor(color){
+				var text_nodes = getSelectedTextNodes();
+				if(text_nodes.length){
+					text_nodes.forEach(function(node){
+						applyProperty(node,'span',{ property:"color", value:color });
+					});
+				}
+			}
+			function setTextFontFamily(fontFamily){
+				var text_nodes = getSelectedTextNodes();
+				if(text_nodes.length){
+					text_nodes.forEach(function(node){
+						applyProperty(node,'span',{ property:"fontFamily", value:fontFamily});
+					});
+				}
+			}
+			function setTextFontSize(fontSize){
+				var text_nodes = getSelectedTextNodes();
+				if(text_nodes.length){
+					text_nodes.forEach(function(node){
+						applyProperty(node,'span',{ property:"fontSize", value:fontSize});
+					});
+				}
+			
+			}
+			function applyProperty(node,nodeNameToUse,opt){
+				if(node.offset !== undefined){
+					var range = document.createRange();
+					if(node.direction == 1){
+						range.setStart(node.el,node.offset);
+						range.setEnd(node.el,node.el.textContent.length);
+					}
+					if(node.direction == -1){
+						range.setStart(node.el,0);
+						range.setEnd(node.el,node.offset);
+					}
+					var element = document.createElement(nodeNameToUse);
+					element.setAttribute('data-w-editor-wrapper','1');
+					if(opt){
+						element.style[opt.property] = opt.value;
+					}
+					return range.surroundContents(element);
+				}
+
+				var has_surrouded = false,tmp = node.el,surrounder = null;
+				while(tmp && !tmp.nextSibling){
+					if(tmp.nodeName.toLowerCase() === nodeNameToUse && tmp.getAttribute('data-w-editor-wrapper') !== null){
+						has_surrouded = true;
+						surrounder = tmp;
+						break;
+					}
+					tmp = tmp.parentNode;
+				}
+				if(tmp.nodeType === 3 && tmp.nextSibling){
+					console.log(tmp.nextSibling.textContent);
+				}
+				if(has_surrouded){
+					if(opt){
+						surrounder.style[opt.property] = opt.value;
+					}
+					return;
+				}
+				
+				var range = document.createRange();
+				range.selectNode(node.el);
+				var element = document.createElement(nodeNameToUse);
+				element.setAttribute('data-w-editor-wrapper','1');
+				if(opt){
+					element.style[opt.property] = opt.value;
+				}
+				range.surroundContents(element);
+			}
+			//var test = function(){
+			//	var range = document.getSelection().getRangeAt(0)
+			//		, selected = range.toString();
+			//	if(selected && isInEditor(range)){
+			//		parent.document.getElementById('tools').style.display='block';
+			//	}
+			//}
+			//editor.addEventListener('keyup',test,false);
+			//editor.addEventListener('mouseup',test,false);
+			//editor.addEventListener('keydown',function(e){
+			//	if(e.keyCode == '66' && e.metaKey){
+			//		var selection = document.getSelection();
+			//		if(!selection.isCollapsed){
+			//			var strong = document.createElement('strong');
+			//			var range = selection.getRangeAt(0)
+			//			range.surroundContents(strong);
+			//			range.selectNode(strong);
+			//			selection.removeAllRanges()
+			//			selection.addRange(range);
+			//		}
+			//	}
+			//},false);
+
+		</script>
+	</body>
+</html>

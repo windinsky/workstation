@@ -1,0 +1,15 @@
+<%- include('../head.html',{locals:locals}); %>
+	<div class="icon">Windinsky</div>
+	<form action="/user/create" method="post" id="login">
+		<div class="login">
+			<ul>
+				<li><span class="account_logo"></span><input type="text" placeholder="Account" name="account"/></li>
+				<li><span class="password_logo"></span><input type="password" placeholder="Password" name="password"/></li>
+			</ul>
+			<span class="go" id="go">GO</span>
+		</div>
+	</form>
+	<script>
+		windinsky.use('session/new');
+	</script>
+<%- include('../foot.html',{locals:locals}); %>

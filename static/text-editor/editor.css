@@ -1,0 +1,37 @@
+.text-color ul,#font_family ul{
+	margin:0;
+	padding:10px;
+}
+.text-color li{
+	display:inline-block;
+	width:15px;height:10px;
+	margin-left:3px;
+	margin-top:3px;
+}
+.text-color li.focus{
+	width:11px;height:6px;
+	border:1px solid black;
+	padding:1px;
+}
+.text-font-family li{
+	display:inline-block;
+	padding:5px 8px;
+	margin-left:3px;
+	margin-top:3px;
+	border:1px solid brown;
+	font-size:12px;
+	cursor:pointer;
+	transition:all .2s;
+}
+.text-font-family li:hover, .text-font-family li.focus{
+	background-color:brown;
+	color:white;
+}
+html,body{
+	height:100%;
+	width:100%;
+}
+@font-face{
+	font-family:monaco;
+	src:url(Monaco.dfont);
+}

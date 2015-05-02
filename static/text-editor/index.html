@@ -1,0 +1,41 @@
+<!doctype html>
+<html>
+	<head>
+		<meta http-equiv="content-type" content="text/html;charset=utf-8"/>
+		<style>
+			html,body{
+				height:100%;
+				width:100%;
+			}
+			body{
+				margin:0;padding:0;
+			}
+			#editor{
+				height:100%;
+				width:100%;
+			}
+			#editor iframe{
+				display:block;
+				height:100%;
+				width:100%;
+			}
+			#editor > div{
+				height:100%;
+			}
+			.editor_con{
+				height:100%;
+			}
+		</style>
+		<link rel="stylesheet" rev="stylesheet" href="editor.css"/>
+		<script src="../js/jquery.js"></script>
+	</head>
+	<body>
+		<div id="editor"></div>
+		<script src="editor.js"></script>
+		<script src="modules/text.js"></script>
+		<script>
+			var editor = new Editor($('#editor'),'');
+			editor.use('text');
+		</script>
+	</body>
+</html>

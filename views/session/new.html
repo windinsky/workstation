@@ -1,0 +1,19 @@
+<%- include('../head.html',{locals:locals}); %>
+	<div class="icon">Windinsky</div>
+	<form action="/session/create" method="post" id="login">
+		<div class="login">
+			<ul>
+				<li><span class="account_logo"></span><input type="text" placeholder="Account" name="account"/></li>
+				<li><span class="password_logo"></span><input type="password" placeholder="Password" name="password"/></li>
+			</ul>
+			<span class="go" id="go">GO</span>
+		</div>
+		<input type="hidden" name="callback" value="<%= locals.callback || '' %>"/>
+	</form>
+	<script>
+		windinsky.use('session/new');
+		<%if(flash){%>
+		alert('<%- flash.msg %>');
+		<%}%>
+	</script>
+<%- include('../foot.html',{locals:locals}); %>
