@@ -1,0 +1,17 @@
+<%- include('../head.html',{locals:locals}); %>
+	<div class="container">
+		<div>
+			<div class="article_list">
+				<div class="add"><span class="add_btn" id='add_new'>写文章</span></div>
+				<ul>
+					<% articles.forEach(function(article){ %>
+					<li id="article_<%= article.id %>">
+						<a href="/articles/show?id=<%= article.id %>"><%= article.title %></a>
+						<span class="trash"></span>
+					</li>
+					<% }); %>
+				</ul>
+			</div>
+		</div>
+	</div>
+<%- include('../foot.html',{locals:locals}); %>

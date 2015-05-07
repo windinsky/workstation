@@ -12,6 +12,12 @@ body{
 .h(@height){
 	height:@height;
 }
+.wh(@size){
+	.w(@size); .h(@size);
+}
+.wlh(@size){
+	.wh(@size); .lh(@size)
+}
 .p(@padding){
 	padding:@padding;
 }

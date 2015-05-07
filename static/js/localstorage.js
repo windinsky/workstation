@@ -133,6 +133,7 @@ windinsky.define('localstorage',['utils','jquery'],function(require,exports,modu
 
 	var AutoSave = {
 		init: function(){
+			global.__page_id = new Date().getTime().toString() + parseInt(Math.random()*9);
 			!get('autosave') && set('autosave',{});
 			!get('autosave:storage') && set('autosave:storage',{});
 		},
@@ -164,7 +165,7 @@ windinsky.define('localstorage',['utils','jquery'],function(require,exports,modu
 				set('config:'+ns,AutoSave.config[ns]);
 				AutoSave.timers[ns] = setInterval(function(){
 					AutoSave.save(ns);
-				},AutoSave.config[ns].timer || 3000);
+				},AutoSave.config[ns].timer || 10000);
 			}else{
 				for(var i in AutoSave.config){
 					if(AutoSave.config.hasOwnProperty(i)){
@@ -207,7 +208,7 @@ windinsky.define('localstorage',['utils','jquery'],function(require,exports,modu
 			var storage = get(key);
 			var arr = [];
 			storage && storage.forEach(function(s){
-				if(filter(s)) arr.push(s);
+				if(filter(s) === false) arr.push(s);
 			});
 			set(key,arr);
 		},
@@ -283,7 +284,7 @@ windinsky.define('localstorage',['utils','jquery'],function(require,exports,modu
 					}else{
 						delete storage[0].__isSaving;
 						set(key,storage);
-						AutoSave.EventEmitter.emit(ns+'_save_err',record);
+						AutoSave.EventEmitter.emit(ns+'_save_err',[storage[0],data]);
 					}
 				});
 				storage[0].__isSaving = true;

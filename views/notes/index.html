@@ -17,7 +17,7 @@
 				<div class="title">
 					<input readonly type="text" id="title"/>
 				</div>
-				<div>
+				<div class="editor_con">
 					<textarea id="editor" name="editor"></textarea>
 				</div>
 			</div>
@@ -29,8 +29,9 @@
 			global.ckeditor = CKEDITOR.replace('editor');
 			ckeditor.on('instanceReady',function(){
 				ckeditor.setReadOnly(true);
-			})
+				ckeditor.resize('100%','500');
+				windinsky.use('notes/list');
+			});
 		});
-		windinsky.use('notes/list');
 	</script>
 <%- include('../foot.html',{locals:locals}); %>

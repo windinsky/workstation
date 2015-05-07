@@ -88,6 +88,13 @@
 					}
 				}
 				console.log(id + ' loaded');
+				loadingModules.every(function(m,i){
+					if(m.id == id){
+						loadingModules.splice(i,1);
+						return false;
+					}
+					return true;
+				})
 			}else{
 				var count = dependents.length;
 				var module = windinsky.isLoading(id) 
@@ -101,6 +108,13 @@
 					if(!count){
 						setTimeout(function(){
 							console.log(id + ' loaded');
+							loadingModules.every(function(m,i){
+								if(m.id == id){
+									loadingModules.splice(i,1);
+									return false;
+								}
+								return true;
+							})
 							module.emit('ready');
 						},1);
 					}
@@ -129,7 +143,7 @@
 	            }
 			};
 			head.appendChild(s);
-			s.src = windinsky.cfg.JS_PATH + id +'.js';
+			s.src = windinsky.cfg.JS_PATH + id +'.js?' + Math.random() + new Date().getTime();
 		},
 		loadCss: function(id){
 			if (cssCache.indexOf(id) !== -1) return;

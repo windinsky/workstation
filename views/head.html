@@ -7,7 +7,9 @@
 		<script>
 			windinsky.cfg = {
 				JS_PATH:'<%= sites.STATIC_JS_PATH%>',
-				CSS_PATH:'<%= sites.STATIC_CSS_PATH%>'
+				CSS_PATH:'<%= sites.STATIC_CSS_PATH%>',
+				sites: <%- JSON.stringify(sites) %>,
+				error_code: <%- JSON.stringify(error_code) %>
 			}
 			function destroyLessCache(pathToCss) { // e.g. '/css/' or '/stylesheets/'
 			   for (var key in window.localStorage) {
@@ -34,6 +36,9 @@
 				__localstorage_loaded.emit('end');
 			});
 		</script>
+		<%}%>
+		<%if(locals.uniqPage){%>
+		<script></script>
 		<%}%>
 	</head>
 	<body>

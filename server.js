@@ -15,6 +15,7 @@ var http		= require('http')
 //globals
 Controller = require('./lib/controller.js');
 SESSION_NAME = "adsfginalll";
+error_code = require('./config/error_code.json');
 
 debug = true;
 
@@ -25,7 +26,8 @@ windinsky.use('ejs',{
 		return path.resolve(__dirname,'views');
 	},
 	default_variables: {
-		sites: require('./config/sites.json')
+		sites: require('./config/sites.json'),
+		error_code: require('./config/error_code.json')
 	}
 });
 
