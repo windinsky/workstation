@@ -10,9 +10,14 @@ util.inherits( Test , MysqlRecord );
 
 utils.extend( Test , MysqlRecord );
 
-Test.$belongs_to('note','id,title,content,updated_at');
+Test.$define_table_name( 'articles' );
 
-Test.$define_table_name( 'tests' );
+Test.$has_and_belongs_to_many('tags','id,name,created_at,updated_at',{
+	join_table : 'tag_resource',
+	foreign_key : 'resource_id',
+	join_condition : 'tag_resource.resource_type = "article"'
+});
+
 
 Test.$define_columns([
 	{
@@ -38,9 +43,16 @@ Test.$define_columns([
 		}
 	},
 	{
-		name      : 'note_id',
+		name      : 'created_at',
 		validates : {
-			type     : 'number',
+			type     : 'date',
+			not_null : true
+		}
+	},
+	{
+		name      : 'updated_at',
+		validates : {
+			type     : 'date',
 			not_null : true
 		}
 	}

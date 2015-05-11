@@ -12,14 +12,18 @@ windinsky.define('notes/list',['jquery','lib/clearHtmlTag','localstorage','ui/co
 			note = id;
 			id   = note.id;
 		}
-		notes.every(function(n,i){
-			if(n.id == id){
+		var not_existed = notes.every(function(n,i){
+			if(n.id == id || n.fake_id == note.fake_id){
 				notes.splice(i,1);
 				notes.push(note);
 				return false;
 			}
 			return true;
 		});
+
+		if(not_existed){
+			notes.push(note);
+		}
 	}
 
 	function resetForm(note){
@@ -50,12 +54,15 @@ windinsky.define('notes/list',['jquery','lib/clearHtmlTag','localstorage','ui/co
 
 			if(!note.id){
 				_note.attr('data-id',response.id);
-				_note.hasClass('selected') && $('#id').val(response.id);
+				_note.hasClass('selected') && $('#id').val(response.data.id);
+				note.id = response.data.id;
+				updateMemory(note);
 			}
 			
 			notes.every(function(n,i){
-				if(n.id == note.id){
+				if(n.id == note.id || n.fake_id == note.fake_id){
 					notes[i].updated_at = response.data.updated_at;
+					notes[i].id = response.data.id;
 					return false;
 				}
 				return true;
@@ -204,23 +211,32 @@ windinsky.define('notes/list',['jquery','lib/clearHtmlTag','localstorage','ui/co
 		if(ignore) return ignore = !ignore;
 	
 		var note,id = $('#id').val();
-		notes.forEach(function(n,i){
 
-			if(id == n.id){
+		if(id){
+			notes.forEach(function(n,i){
 
-				note = notes[i] = {
-					updated_at : notes[i].updated_at,
-					fake_id    : $('.notes_list li.selected').attr('id').split('_')[1],
-					content    : ckeditor.getData(),
-					title      : $('#title').val(),
-					id         : id
-				};
+				if(id == n.id){
 
-				return false;
+					note = notes[i] = {
+						updated_at : notes[i].updated_at,
+						fake_id    : $('.notes_list li.selected').attr('id').split('_')[1],
+						content    : ckeditor.getData(),
+						title      : $('#title').val(),
+						id         : id
+					};
 
-			}
-			return true;
-		});
+					return false;
+
+				}
+				return true;
+			});
+		}else{
+			note = {
+				title: $('#title').val(),
+				fake_id: $('.notes_list li.selected').attr('id').split('_')[1],
+				content: ckeditor.getData()
+			};
+		}
 
 		if((!note.title || note.title == DEFAULT_TITLE) && !note.content) return;
 
