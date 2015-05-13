@@ -1,13 +1,14 @@
 <%- include('../head.html',{locals:locals}); %>
 	<div class="container">
 		<div class="article_editor">
-			<input type="hidden" id="id"/>
+			<input type="hidden" id="id" value="<%=id%>"/>
 			<div class="title">
 				<input type="text" id="title" value="<%= article.title %>"/>
+				<input type="hidden" id="fake_id" value="<%= new Date().getTime() %>"/>
 			</div>
 			<div class="tags">
 				<% tags && tags.forEach(function(tag){ %>
-				<input type="checkbox" name="tag" class="tag" id="<%= tag.id %>" <%if(article.tags && article.tags.indexOf('tag.id') != -1){%>checked<%}%>/>
+				<input type="checkbox" name="tag" class="tag" id="tag_<%= tag.id %>" <%if(article.tags && article.tags.indexOf(tag.id) != -1){%>checked<%}%>/>
 				<label for="tag_<%=tag.id%>"><%= tag.name %></label>
 				<%});%>
 				<input type="text" id="new_tag" style="display:none"/>

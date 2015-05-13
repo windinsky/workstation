@@ -4,7 +4,7 @@ var Tag = require('../models/tag');
 module.exports = new Controller({
 	'list' : function(req,res){
 		var type = req.__get.type;
-		var tags = Tag.list(this.user_info.id,type),self = this;
+		var tags = Tag.list(this.user.id,type),self = this;
 		tags.once('end',function(list){
 			switch(req.wants()){
 				case 'json':
@@ -21,7 +21,7 @@ module.exports = new Controller({
 	},
 	'delete': function(req,res){
 		var id = req.__post.id, 
-			query = Tag['delete'](id,this.user_info.id);
+			query = Tag['delete'](id,this.user.id);
 
 		query.once('end',function(data){
 			if(data.affectedRows == 1){
@@ -35,13 +35,14 @@ module.exports = new Controller({
 		});
 	},
 	'save': function(req,res){
-		var id = req.__post.id,query,
-			query = Tag.save(req.__post,this.user_info.id);
+		var tag = new Tag(req.__post);
+		tag.user_id = this.user.id;
+		var query = tag.$save('name,user_id,type');
 
 		query.once('error',function(err){
 			return res.json({ success:0, error:err });
 		});
-		query.once('save_end', function(data){
+		query.once('end', function(data){
 			return res.json({ success:1, data:data[0]});
 		});
 	}

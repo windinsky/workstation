@@ -1,0 +1,17 @@
+<%
+	var p = pagination;
+	var total_page = Math.ceil(p.total/p.per);
+	var params = p.url.split('?')[1].split('&').filter(function(p){
+		return p.split('=')[0] != 'page';
+	}).join('&');
+
+%>
+<div class="pagination">
+	<% for(var i = 0 ; i < total_page ; i++){%>
+	<%if(i == p.cur){%>
+	<span><%= i+1 %></span>
+	<%}else{%>
+	<a href="?<%= params %>&page=<%= i %>"><%= i+1 %></a>
+	<%}%>
+	<% } %>
+</div>

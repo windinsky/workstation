@@ -33,6 +33,10 @@ windinsky.define('article/edit',['jquery','lib/clearHtmlTag','localstorage','ui/
 		}
 
 
+		AutoSave.EventEmitter.on('articles_save_ok',function(result){
+			if($('#id').val()) return;
+			$('#id').val(result[i].data.id);
+		});
 		AutoSave.EventEmitter.on('articles_save_err',function(result){
 			var record = result[0],err = result[1];
 			if(err.error.code == windinsky.cfg.error_code.DATABASE.CONFLICT){
@@ -96,6 +100,7 @@ windinsky.define('article/edit',['jquery','lib/clearHtmlTag','localstorage','ui/
 			id         : id,
 			title      : $('#title').val(),
 			content    : ckeditor.getData(),
+			fake_id    : $('#fake_id').val(),
 			tags       : $('.tag:checked').map(function(t){return this.id.split('_')[1]}).toArray().join(','),
 			updated_at : $('#updated_at').val()
 		};
@@ -104,20 +109,17 @@ windinsky.define('article/edit',['jquery','lib/clearHtmlTag','localstorage','ui/
 
 		var records = AutoSave.getRecords(ns);
 
-		if(id){
-			var existed = false;
-			records.every(function(r,i){
-				if(r.id === id){
-					records[i] = article;
-					AutoSave.updateRecords(ns,records);
-					existed = true;
-					return false;
-				}
-				return true;
-			});
-			if(existed) return;
-		}
-		AutoSave.addRecord(ns,article);
+		var existed = false;
+		records.every(function(r,i){
+			if(r.id === id || r.fake_id === $('#fake_id').val()){
+				records[i] = article;
+				AutoSave.updateRecords(ns,records);
+				existed = true;
+				return false;
+			}
+			return true;
+		});
+		!existed && AutoSave.addRecord(ns,article);
 	}
 
 

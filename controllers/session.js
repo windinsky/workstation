@@ -1,12 +1,10 @@
 var auth = require('../lib/auth');
 var User = require('../models/user');
 var Session = require('../models/session');
+var Helper = require('../helper');
 
 module.exports = new Controller({
 	'new': function(req,res){
-		if(this.user_info){
-			return res.redirect('/dashboard/');
-		}
 		var data = {
 			__css:['session'],
 			callback: decodeURIComponent(req.__get.callback || ''),
@@ -15,30 +13,28 @@ module.exports = new Controller({
 		res.render('session/new.html',data);
 	},
 	'create': function(req,res){
-		if(this.user_info){
-			return res.redirect('/dashboard/');
-		}
-		var account = req.__post.account,
-			password = req.__post.password;
 
-		if(!account || !password){
-			res.flash({msg:'account & password can not be empty'});
-			return res.redirect('/session/new');
-		}
+		//if(!account || !password){
+		//	res.flash({msg:'account & password can not be empty'});
+		//	return res.redirect('/session/new');
+		//}
 
-		var query = User.find({
-			keys:['account','password'],
-			values: [account,password]
-		});
+		var query = User.$find({
+			account: req.__post.account,
+			password: Helper.hash_password(req.__post.password)
+		},'id');
+
 		query.once('end', function(data){
 			if(data.length){
-				var user = data[0];
-				query = Session.create(user.id);
-				query.once('end',function(token){
-					res.cookie.set(SESSION_NAME,token,{
+				var session = new Session({
+					user_id: data[0].id
+				});
+				var save = session.$save('user_id,token','token');
+				save.once('end',function(_session){
+					res.cookie.set(SESSION_NAME,_session[0].token,{
 						maxAge:30*24*60*60,
 						//httpOnly:true,
-						domain:'windinsky.com',
+						domain:'.windinsky.com',
 						path:'/'
 					});
 					res.redirect(req.__post.callback || '/dashboard/');
@@ -50,6 +46,7 @@ module.exports = new Controller({
 		});
 		query.once('error',function(err){
 			console.log(err);
+			res.redirect('/session/new');
 		});
 	},
 	'destory': function(req,res){

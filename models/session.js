@@ -1,21 +1,20 @@
-var Mysql = require('../lib/adapter');
 var md5 = require('../lib/md5');
-var EventEmitter = require('events').EventEmitter;
+var util = require('util');
+var utils = require('../lib/utils');
+var MysqlRecord = require('mysqlrecord');
+var columns = require('./columns');
 
-module.exports = {
-	'create': function(user_id){
-		var mysql = new Mysql()
-			, token = md5(new Date().getTime().toString())
-			, e = new EventEmitter();
 
-		mysql.query('insert into sessions(user_id,token) values(?,?)',[user_id,token]);
-		mysql.once('end',function(){
-			e.emit('end',token);
-		});
-		mysql.once('error',function(err){
-			e.emit('error',err);
-		})
-
-		return e;
-	}
+function Session( session ){
+	MysqlRecord.call(this,session);
 }
+
+util.inherits( Session , MysqlRecord );
+
+utils.extend( Session , MysqlRecord );
+
+Session.$define_table_name( 'sessions' ).$define_columns(columns.sessions);
+
+Session.$belongs_to('user','id,account');
+
+module.exports = Session;

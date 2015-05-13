@@ -1,0 +1,11 @@
+<%- include('../head.html',{locals:locals}); %>
+<div class="container">
+	<h1 class="title"><%= article.title %></h1>
+	<div class="tags">
+		TAGS:<%= article.tags.map(function(t){return t.name;}).join(',') %>
+	</div>
+	<div class="content">
+		<%- article.content %>
+	</div>
+</div>
+<%- include('../foot.html',{locals:locals}); %>

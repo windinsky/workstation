@@ -1,28 +1,61 @@
-var Mysql = require('../lib/adapter');
-var TagResource = {
-	replace: function(resource_id,tag_ids,user_id,type){
-		var mysql = new Mysql();
-		var del = TagResource['delete'](resource_id,null,user_id,type);
-		del.once('end',function(){
-			var sql = []; data = [];
-			tag_ids.forEach(function(tag){
-				sql.push('insert into tag_resource (resource_id,tag_id,type,user_id) values (?,?,?,?)');
-				data = data.concat([resource_id,tag,type,user_id]);
-			});
-			mysql.query(sql.join(';'),data);
-		});
-		return mysql;
-	},
-	add: function(resource_id,tag_id,resource_type,user_id){
-		var mysql = new Mysql()
-			, sql = 'insert into tag_resource (resource_id,tag_id,resource_type,user_id) values (?,?,?,?);'
-			, data = [resource_id,tag_id,resource_type,user_id];
-		return mysql.query(sql,data);
-	},
-	'delete': function(resource_id,tag_id,user_id,type){
-		var mysql = new Mysql()
-			, sql = 'delete form tag_resource where (resource_id = ? or tag_id = ?) and user_id = ?' + type? ' and type = ? ':'' + ';'
-			, data = [resource_id,tag_id,user_id,type];
-		return mysql.query(sql,data);
-	}
+var util = require('util');
+var utils = require('../lib/utils');
+var MysqlRecord = require('mysqlrecord');
+var columns = require('./columns');
+var EventEmitter = require('events').EventEmitter;
+
+function TagResource( tag_resource ){
+	MysqlRecord.call(this,tag_resource);
 }
+
+util.inherits( TagResource , MysqlRecord );
+
+utils.extend( TagResource , MysqlRecord );
+
+TagResource.$define_table_name( 'tag_resources' );
+TagResource.$define_columns( columns.tag_resources );
+
+TagResource.$replace = function( resource_id , tag_ids , type ){
+
+	if( !tag_ids ) throw 'tag_ids empty!';
+	if( !resource_id ) throw 'resource_id empty!';
+	if( !type ) throw 'type empty!';
+
+	tag_ids.split && (tag_ids = tag_ids.split(','));
+
+	var count = tag_ids.length
+		, result = []
+		, e = new EventEmitter()
+		, query = TagResource.$delete({
+			resource_id : resource_id,
+			type : type
+		});
+
+
+	query.once( 'end' , function(){
+		tag_ids.forEach(function(t){
+			var tag_resource = new TagResource({
+				resource_id : resource_id,
+				tag_id : t,
+				type : type
+			});
+			tag_resource.$save('resource_id,tag_id,type',{},function( err , data ){
+				if( err ) return e.emit('err',err);
+				count--;
+				result.push(data[0]);
+				if(!count){
+					e.emit('end',result);
+				}
+			});
+		});
+	} );
+
+	query.once('err',function(err){
+		e.emit('err',err);
+	});
+
+	return e;
+
+}
+
+module.exports = TagResource;

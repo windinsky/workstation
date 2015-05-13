@@ -1,33 +1,19 @@
-var Mysql = require('../lib/adapter');
 var md5 = require('../lib/md5');
+var util = require('util');
+var utils = require('../lib/utils');
+var MysqlRecord = require('mysqlrecord');
+var columns = require('./columns');
 
-var User = {
-	get_info_by_token: function(token){
-		var mysql = new Mysql();
-		mysql.query('select id,account from users where id = (select user_id from sessions where token=?)',[token]);
-		return mysql;
-	},
-	find: function(conditions){
-		var mysql = new Mysql()
-			, sql = 'select id,account from users where '
-			, i;
-			
-		sql += conditions.keys.map(function(key){
-			return key + '=?'
-		}).join(' and ');
+function User( user ){ MysqlRecord.call( this , user ); }
 
-		if((i = conditions.keys.indexOf('password')) != -1){
-			conditions.values[i] = md5(md5(md5(conditions.values[i])));
-		}
-		mysql.query(sql,conditions.values);
-		return mysql;
-	},
-	create: function(account,password){
-		var mysql = new Mysql()
-			, sql = 'insert into users(account,password) values (?,?)';
-		mysql.query(sql,[account,md5(md5(md5(password)))]);
-		return mysql;
-	}
-};
+util.inherits( User , MysqlRecord );
+
+utils.extend( User , MysqlRecord );
+
+User.$define_table_name( 'users' ).$define_columns( columns.users );
+
+User.$has_many('notes','id,title,content,updated_at');
+User.$has_many('articles','id,title,content,updated_at');
+User.$has_many('tags','id,type,name,updated_at');
 
 module.exports = User;

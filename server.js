@@ -17,7 +17,7 @@ Controller = require('./lib/controller.js');
 SESSION_NAME = "adsfginalll";
 error_code = require('./config/error_code.json');
 
-debug = true;
+global.DEBUG = true;
 
 //middlewares
 windinsky.use('ejs',{
@@ -50,7 +50,6 @@ router.alias('login','/session/new');
 router.alias('register','/user/new');
 router.setDefaultAction('/dashboard');
 
-DEBUG = true;
 
 fs.createWriteStream(__dirname+"/config/pids", {
 	flags: "a+",

@@ -1,17 +1,29 @@
 <%- include('../head.html',{locals:locals}); %>
+	<div class="add"><a class="add_btn" href="/articles/new" id='add_new'>NEW</a></div>
 	<div class="container">
 		<div>
 			<div class="article_list">
-				<div class="add"><span class="add_btn" id='add_new'>写文章</span></div>
 				<ul>
 					<% articles.forEach(function(article){ %>
 					<li id="article_<%= article.id %>">
-						<a href="/articles/show?id=<%= article.id %>"><%= article.title %></a>
+						<p class="title">
+							<a href="/articles/show?id=<%= article.id %>"><%= article.title %></a>
+						</p>
+						<span class="last_modify">last edit at:<%= article.updated_at %></span>
 						<span class="trash"></span>
+						<p class="tags">
+							<% article.tags && article.tags.forEach(function(t){ %>
+								<a href="/articles/tag?id=<%= t.id %>" class="tag"><%=t.name%></a>
+							<% }); %>
+						</p>
 					</li>
 					<% }); %>
 				</ul>
 			</div>
 		</div>
+		<%- include('../pagination.html',{locals:locals}); %>
 	</div>
+	<script>
+		windinsky.use('articles/index');
+	</script>
 <%- include('../foot.html',{locals:locals}); %>

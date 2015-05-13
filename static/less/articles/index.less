@@ -1,0 +1,45 @@
+@import '../global.less';
+
+a{
+	text-decoration:none;
+	&:hover{
+		text-decoration:underline;
+	}
+}
+
+.add{ .p(10px 0); .bc(black); .pf; .w(100%); top:0; z-index:2; .tr;
+	a{
+		.inline_block;.p(5px 10px); .b(1px solid white); .c(white); .mr(30px);
+	}
+}
+
+.container{ .w(80%); .auto; .mt(80px);
+	ul{ list-style:none; .m(0); .p(0);
+		li{ .p(20px); border-bottom:1px solid #eeeeee; ._pr; min-height:50px;
+			p{margin:0;padding:0;}
+			&:nth-child(even){
+				.bc(#fafafa);
+				.tag{
+					.bc(white);
+				}
+			}
+			p.title{
+				a{ .c(skyblue); .fs(16px); }
+			}
+			.trash{
+				.bi("trash.png"); .bs(100%); .bp(center center); .w(24px); .pointer;.pa; right:10px; .h(48px); bottom:0; .no_repeat;
+				&:hover{ .bi("trash_hover.png"); }
+			}
+			.last_modify{
+				.pa; right:10px; top:20px;
+			}
+			.tags{
+				.mt(10px);
+			}
+			.tags .tag{
+				.inline_block; .p(2px 5px); min-width:25px; .tc; border:1px solid brown; .fs(6px);color:gray; .mr(10px)
+			}
+		}
+
+	}
+}

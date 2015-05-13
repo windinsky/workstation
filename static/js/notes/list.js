@@ -70,15 +70,18 @@ windinsky.define('notes/list',['jquery','lib/clearHtmlTag','localstorage','ui/co
 
 		});
 		
+		// restore unsaved changes
 		var records = AutoSave.getRecords(ns);
 		if(records.length){
 			records.forEach(function(r){
 				notes.forEach(function(n,i){
-					if(n.id == r.id && new Date(n.updated_at) == new Date(r.updated_at)){
+					if(n.id == r.id && n.updated_at == r.updated_at){
 						updateMemory(r);
 						if($('#id').val() == n.id){
 							ckeditor.setData(r.content);
+							$('#title').val(r.title);
 						}
+						$('[data-id="'+r.id+'"] span:first').html(clearHtmlTag.process(r.title));
 					}
 				});
 			});

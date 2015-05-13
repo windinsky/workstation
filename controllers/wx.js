@@ -26,5 +26,8 @@ module.exports = new Controller({
 			console.log(err,resp);
 		});
 		res.end('');
+	},
+	'auth' : function(req,res){
+		res.end('');
 	}
 });

@@ -5,7 +5,7 @@ var Helper = require('../helper');
 module.exports = new Controller({
 	'list' : function(req,res){
 		var self = this;
-		Note.$find({ user_id: this.user_info.id },'id,title,content,updated_at')
+		this.user.notes('id,title,content,updated_at')
 			.once('end',function(list){
 				list.forEach(function(note){
 					note.title = Helper.xss(note.title);
@@ -22,7 +22,7 @@ module.exports = new Controller({
 	'delete': function(req,res){
 
 		var id = req.__post.id
-			, query = Note.$delete([{ id:id },{ user_id: this.user_info.id }]);
+			, query = Note.$delete([{ id:id },{ user_id: this.user.id }]);
 
 		query.once('end', function( data ){
 
@@ -42,7 +42,7 @@ module.exports = new Controller({
 	'save': function(req,res){
 
 		var note = new Note(req.__post);
-		note.user_id = this.user_info.id;
+		note.user_id = this.user.id;
 
 		if( note.id ){
 		
