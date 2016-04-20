@@ -11,6 +11,7 @@
 		this.id = id;
 		this._ready = false;
 	}
+    var timers = [];
 	Module.prototype.isDepend = function(id){
 		return this.dependents.indexOf(id) !== -1;
 	};
@@ -130,7 +131,7 @@
 				});
 			};
 		},
-		_load: function(id,fn){
+		_load: function( id , no_ext ){
 			var s = document.createElement('script'),
 			head = document.head  || document.getElementsByTagName('head')[0] || document.documentElement;
 			s.async = 'async';
@@ -143,7 +144,7 @@
 	            }
 			};
 			head.appendChild(s);
-			s.src = windinsky.cfg.JS_PATH + id +'.js?' + Math.random() + new Date().getTime();
+			s.src = windinsky.cfg.JS_PATH + id + ( no_ext ? '' : '.js' ) + '?' + windinsky.cfg.VERSION_NUMBER;
 		},
 		loadCss: function(id){
 			if (cssCache.indexOf(id) !== -1) return;
@@ -166,8 +167,21 @@
 			_module = new Module(id);
 			_module.once('ready', fn);
 			loadingModules.push(_module);
-			windinsky._load(id);
+            timers.push( 
+                setTimeout( function(){
+                    windinsky._load(id); 
+                }, 1 )
+            );
 		},
+        packLoad: function(){
+            timers.forEach( function( t ){
+                clearTimeout( t );
+            });
+            var ids = loadingModules.map( function( m ){
+                return m.id.replace(/\//g,'+');
+            }).join(',');
+            windinsky._load( ids , true );
+        },
 		require: function(id){
 			return cache[id];
 		}

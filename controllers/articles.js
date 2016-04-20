@@ -13,8 +13,7 @@ module.exports = new Controller({
 		var articles = Article.$find({user_id:this.user.id},'id,content,title,updated_at','order by articles.updated_at desc',{ $with:'tags' , pagination:{
 			offset : offset,
 			count : page_count
-		} })
-		, self = this;
+		} }) , self = this;
 
 		articles.once('end',function(list){
 			var data = {
@@ -25,7 +24,7 @@ module.exports = new Controller({
 					cur: cur,
 					url: req.url
 				},
-				__css: ['articles/index']
+				__css: ['articles/index','pagination']
 			};
 			try{
 				res.render('articles/index.html',data);

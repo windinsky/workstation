@@ -259,5 +259,98 @@ module.exports = {
 				type     : 'date'
 			}
 		},
+	],
+	images: [
+		{
+			name      : 'id',
+			validates : {
+				type     : 'number',
+				readonly : true
+			}
+		},
+		{
+			name      : 'user_id',
+			validates : {
+				type     : 'number',
+				not_null : true
+			}
+		},
+		{
+			name      : 'parent_id',
+			validates : {
+				type     : 'number'
+			}
+		},
+		{
+			name      : 'width',
+			validates : {
+				type     : 'number'
+			}
+		},
+		{
+			name      : 'height',
+			validates : {
+				type     : 'number'
+			}
+		},
+		{
+			name      : 'src',
+			validates : {
+				type     : 'string',
+				not_null : true
+			}
+		},
+		{
+			name      : 'path',
+			validates : {
+				type     : 'string',
+				not_null : true
+			}
+		},
+		{
+			name      : 'md5',
+			validates : {
+				type     : 'string',
+				not_null : true
+			}
+		},
+		{
+			name      : 'created_at',
+			validates : {
+				type     : 'date'
+			}
+		},
+		{
+			name      : 'updated_at',
+			validates : {
+				type     : 'data'
+			}
+		}
+	],
+	'templates': [
+		{
+			name: 'id',
+			validates:{
+				type:'number'
+			}
+		},
+		{
+			name:'html',
+			validates:{
+				type:'string'
+			}
+		},
+		{
+			name: 'created_at',
+			validates:{
+				type:'date'
+			}
+		},
+		{
+			name:'updated_at',
+			validates:{
+				type:'date'
+			}
+		}
 	]
 }

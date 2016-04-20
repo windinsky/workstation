@@ -6,18 +6,31 @@ var http		= require('http')
 	, fs		= require('fs')
 	//, path		= require('./config/path.json')
 	//, sites 	= require('./config/site.json')
-	, path = require('path')
+	, path      = require('path')
 	, cluster	= require('cluster')
 	//, numCPUs	= require('os').cpus().length
-	, numCPUs = 1
+	, numCPUs   = 1
 	, windinsky = require('windinsky_lib');
 
+
 //globals
-Controller = require('./lib/controller.js');
+Controller.multi_site( require('./config/api.json') );
+
 SESSION_NAME = "adsfginalll";
+
 error_code = require('./config/error_code.json');
 
 global.DEBUG = true;
+
+Router.config({
+	ctrls_path: path.resolve(__dirname,'controllers')
+    //, multi_sites : true
+    //, hosts_mapping : require( './config/hosts.json' )
+});
+
+Router.alias('login','/session/new');
+Router.alias('register','/user/new');
+Router.setDefaultAction('/dashboard');
 
 //middlewares
 windinsky.use('ejs',{
@@ -27,6 +40,7 @@ windinsky.use('ejs',{
 	},
 	default_variables: {
 		sites: require('./config/sites.json'),
+        etc: require('./config/global.json'),
 		error_code: require('./config/error_code.json')
 	}
 });
@@ -36,19 +50,9 @@ windinsky.use('bodyParser');
 windinsky.use('flash');
 windinsky.use('wants');
 windinsky.use('redirect');
-var needle = require('needle');
-var API = require('./node_modules/wechat/node_modules/wechat-api');
-
 
 
 // user define;
-var router = require('./lib/route.js');
-router.config({
-	ctrls_path: path.resolve(__dirname,'controllers')
-});
-router.alias('login','/session/new');
-router.alias('register','/user/new');
-router.setDefaultAction('/dashboard');
 
 
 fs.createWriteStream(__dirname+"/config/pids", {
@@ -61,22 +65,35 @@ if (cluster.isMaster) {
 	// Fork workers.
 	for (var i = 0; i < numCPUs; i++) cluster.fork();
 
+	//global.thirdparty = new ThirdpartyServer(
+	//	'wx56752c8692626425' , 
+	//	'0c79e1fa963cd80cc0be99b20a18faeb' , 
+	//	'D&amp;amp;amp;amp;gt;?YHrvxdc' , 
+	//	'yfpnjyVW1SfpMhl9UD0hy7YSRLA58LQ1DP1dTygqO13' , 
+	//	'mysql://root@localhost/windinsky' 
+	//);
+	//thirdparty.start();
+
 	cluster.on('exit', function(worker, code, signal) {
 		console.log('worker ' + worker.process.pid + ' died');
 		cluster.fork();
 	});
 
 } else {
+	//global.thirdparty = new ThirdpartyServer(
+	//	'wx56752c8692626425' , 
+	//	'0c79e1fa963cd80cc0be99b20a18faeb' , 
+	//	'D&amp;amp;amp;amp;gt;?YHrvxdc' , 
+	//	'yfpnjyVW1SfpMhl9UD0hy7YSRLA58LQ1DP1dTygqO13' , 
+	//	'mysql://root@localhost/windinsky',
+	//	true
+	//);
 	// Workers can share any TCP connection
 	// In this case its a HTTP server
 	http.createServer(function(req, res) {
 		windinsky.process(req,res,function(){
-			router.dealwith(req,res);
+			Router.dealwith(req,res);
 		});
 	}).listen(port[0]);
 }
 console.log('server started!');
-//console.log(port[0]);
-//http.createServer(function(req, res) {
-//	windinsky.process(req,res);
-//}).listen(port[0]);

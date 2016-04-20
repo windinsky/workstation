@@ -1,14 +1,17 @@
 var auth = require('../lib/auth');
 var User = require('../models/user');
+var Helper = require('../helper');
 
 module.exports = new Controller({
 	'new': function(req,res){
+        console.log(123);
 		var data = {
 			__css:['session']
 		}
 		res.render('user/new.html',data);
 	},
 	'create': function(req,res){
+        console.log(456);
 		var account = req.__post.account,
 			password = req.__post.password,
 			err = [];
@@ -32,10 +35,19 @@ module.exports = new Controller({
 			}));
 		}
 
-		var query = User.create(account,password);
-		query.once('end', function(data){
+        var user = new User({
+            account : account
+            , password : password
+            , created_at : new Date()
+            , updated_at : new Date()
+        });
+        console.log(user);
+
+        user.$save( [ 'account' , 'password' , 'created_at' , 'updated_at' ] , [ 'id' ] , function( err , data ){
+            console.log(arguments);
 			res.redirect('/session/new');
-		});
+        
+        });
 
 	},
 	'destory': function(req,res){

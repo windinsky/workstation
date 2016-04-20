@@ -3,7 +3,7 @@ var utils = require('../lib/utils');
 var MysqlRecord = require('mysqlrecord');
 var columns = require('./columns');
 
-function Note( note ){ MysqlRecord.call(this,note); }
+function Note( note ){ MysqlRecord.call( this , note ); }
 
 util.inherits( Note , MysqlRecord );
 

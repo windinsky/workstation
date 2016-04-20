@@ -1,9 +1,12 @@
 <%
 	var p = pagination;
 	var total_page = Math.ceil(p.total/p.per);
-	var params = p.url.split('?')[1].split('&').filter(function(p){
-		return p.split('=')[0] != 'page';
-	}).join('&');
+	var params = p.url.split('?')[1] || '';
+	if(params){
+		params = params.split('&').filter(function(p){
+			return p.split('=')[0] != 'page';
+		}).join('&');
+	}
 
 %>
 <div class="pagination">

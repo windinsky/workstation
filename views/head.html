@@ -4,28 +4,35 @@
 		<meta http-equiv="content-type" content="text/html;charset=utf-8"/>
 		<script src="<%= sites.STATIC_JS_PATH %>lib/EventEmitter.js"></script>
 		<script src="<%= sites.STATIC_JS_PATH %>lib/windinsky.js"></script>
+        <meta property="wb:webmaster" content="22889c4fa1adeffe" />
+        <script>
+            var ua = navigator.userAgent.toLowerCase();
+            if( ua.indexOf('ipad') !== -1 || ua.indexOf( 'iphone' ) !== -1 || ua.indexOf( 'android' ) !== -1 ){
+                document.write( '<meta name="viewport" content="width=device-width, height=device-height, initial-scale=1.0, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">' );
+            }
+        </script>
 		<script>
 			windinsky.cfg = {
 				JS_PATH:'<%= sites.STATIC_JS_PATH%>',
 				CSS_PATH:'<%= sites.STATIC_CSS_PATH%>',
+                VERSION_NUMBER:'<%= etc.version_number %>',
+                DEBUG:'<%= Number( etc.is_debug ) %>',
 				sites: <%- JSON.stringify(sites) %>,
 				error_code: <%- JSON.stringify(error_code) %>
 			}
 			function destroyLessCache(pathToCss) { // e.g. '/css/' or '/stylesheets/'
 			   for (var key in window.localStorage) {
-				  if (key.indexOf('.less') !== -1) {
-					 delete window.localStorage[key];
-				  }
+                 delete window.localStorage[key];
 			   }
 			}
 			destroyLessCache();
 			var global = window;
 		</script>
 		<% (locals.__css || []).forEach(function(css){ %>
-		<link rel="stylesheet/less" type="text/css" href="<%= sites.STATIC_LESS_PATH + css %>.less"/>
+		<link rel="stylesheet" type="text/css" href="<%= sites.STATIC_CSS_PATH + css %>.css"/>
 		<% }); %>
+		<link rel="stylesheet" type="text/css" href="<%= sites.STATIC_CSS_PATH %>body.css"/>
 		<%if(locals.useAutoSave){%>
-		<script src="<%= sites.STATIC_JS_PATH %>localstorage.js"></script>
 		<script>
 			var __localstorage_loaded = new EventEmitter();
 			windinsky.use('localstorage',function(){
@@ -35,10 +42,12 @@
 				AutoSave.start();
 				__localstorage_loaded.emit('end');
 			});
+            windinsky.packLoad();
 		</script>
 		<%}%>
 		<%if(locals.uniqPage){%>
 		<script></script>
 		<%}%>
+		<title><%= locals.__title || '' %></title>
 	</head>
 	<body>

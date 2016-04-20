@@ -23,15 +23,15 @@
 			</div>
 		</div>
 	</div>
+    <script src="<%= sites.STATIC_MODULE_PATH %>ckeditor/ckeditor.js"></script>
 	<script>
 		var notes = <%- JSON.stringify(notes || 'undefined') %>;
-		windinsky.use(['modules/ckeditor/ckeditor'],function(){
-			global.ckeditor = CKEDITOR.replace('editor');
-			ckeditor.on('instanceReady',function(){
-				ckeditor.setReadOnly(true);
-				ckeditor.resize('100%','500');
-				windinsky.use('notes/list');
-			});
-		});
+        global.ckeditor = CKEDITOR.replace('editor');
+        ckeditor.on('instanceReady',function(){
+            ckeditor.setReadOnly(true);
+            ckeditor.resize('100%','500');
+            windinsky.use('notes/list');
+            windinsky.packLoad();
+        });
 	</script>
 <%- include('../foot.html',{locals:locals}); %>

@@ -3,6 +3,7 @@ windinsky.define('ui/confirm',['ui/window','jquery'],function(require,exports,mo
 	windinsky.loadCss('ui/confirm');
 
 	var Confirm = function(msg,options){
+		var self = this;
 		var html = '<div class="__confirm_title">'+(options.title || 'Please Confirm')+'</div>' + 
 			'<div class="__confirm_content">'+msg+'</div>' +
 			'<div class="__confirm_btns">'+

@@ -1,8 +1,10 @@
+<div style="position:sticky;height:30px;background:black;"></div>
 <%- include('../head.html',{locals:locals}); %>
 	<div class="add"><a class="add_btn" href="/articles/new" id='add_new'>NEW</a></div>
 	<div class="container">
 		<div>
 			<div class="article_list">
+				<% if(articles.length ){%>
 				<ul>
 					<% articles.forEach(function(article){ %>
 					<li id="article_<%= article.id %>">
@@ -19,11 +21,16 @@
 					</li>
 					<% }); %>
 				</ul>
+				<% }else{ %>
+					<p>No articles found. How about <a href="/articles/new">write one now?</a></p>
+				<% } %>
 			</div>
 		</div>
 		<%- include('../pagination.html',{locals:locals}); %>
 	</div>
 	<script>
 		windinsky.use('articles/index');
+		alert(123);
+		confirm(123);
 	</script>
 <%- include('../foot.html',{locals:locals}); %>

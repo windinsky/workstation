@@ -3,6 +3,12 @@ var Note = require('../models/note');
 var Helper = require('../helper');
 
 module.exports = new Controller({
+	'slider' : function( req , res ){
+		res.render('notes/slider.html', {
+			__css: ['notes/slider']
+		});
+	
+	},
 	'list' : function(req,res){
 		var self = this;
 		this.user.notes('id,title,content,updated_at')
@@ -22,7 +28,7 @@ module.exports = new Controller({
 	'delete': function(req,res){
 
 		var id = req.__post.id
-			, query = Note.$delete([{ id:id },{ user_id: this.user.id }]);
+			, query = Note.$delete({ id:id },{ user_id: this.user.id });
 
 		query.once('end', function( data ){
 
@@ -45,8 +51,8 @@ module.exports = new Controller({
 		note.user_id = this.user.id;
 
 		if( note.id ){
-		
-			Note.$find({id:note.id,updated_at:note.updated_at},'id,updated_at,title,content',function( err , data ){
+
+			Note.$find( { id : note.id , updated_at : note.updated_at },'id,updated_at,title,content',function( err , data ){
 				if(data.length){
 					save();
 				}else{

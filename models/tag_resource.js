@@ -1,11 +1,11 @@
-var util = require('util');
-var utils = require('../lib/utils');
-var MysqlRecord = require('mysqlrecord');
-var columns = require('./columns');
+var util         = require('util');
+var utils        = require('../lib/utils');
+var MysqlRecord  = require('mysqlrecord');
+var columns      = require('./columns');
 var EventEmitter = require('events').EventEmitter;
 
 function TagResource( tag_resource ){
-	MysqlRecord.call(this,tag_resource);
+	MysqlRecord.call( this,tag_resource );
 }
 
 util.inherits( TagResource , MysqlRecord );
