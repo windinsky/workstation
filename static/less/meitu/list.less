@@ -1,0 +1,106 @@
+@import '../global.less';
+@import './block.less';
+body{
+    .c(#333);
+}
+.divid{ ._divid; }
+._icon();
+.clearfix{
+    overflow:hidden;
+}
+.sdk{
+    margin:0 .2rem;
+    .avatar{
+        .fl; .w(.68rem);.h(.68rem); .br(100%); background-size:100%; .mt(.23rem);
+    }
+    .info{
+        .pt(.2rem); .ml(.2rem); .fl; .w(5.1rem);
+        .nick-name{
+            .fs(.3rem); .pb(.16rem); .m(0); .llh(.3rem);
+        }
+        .comment{
+            .fs(.24rem); .lh(.33rem);
+        }
+        .share-icon{
+            .fr;.pointer;
+        }
+    }
+    .photos{
+        .mt(.2rem);
+        .photo{
+            .w(1.05rem); .h(1.54rem); background-size:cover; border:1px solid white; .fl; background-repeat:no-repeat; overflow:hidden; .bc(white);
+            background-position:center;
+            &:first-child{
+                .mr(.08rem);
+            }
+            .tag{
+                .bi('before.png'); background-size:cover; .w(.58rem); .h(.58rem); opacity:.7;
+                &:last-child{
+                    .bi('after.png');
+                }
+            }
+        }
+    }
+    .p(.2rem 0);
+    .pic{
+        .w(1.6rem); .h(1.6rem); .fl; background-size:cover; background-repeat:no-repeat;
+    }
+    .right{
+        .fl; .w(4.1rem); .ml(.3rem); .pt(.01rem);
+        .title{ .fs(.28rem); .pb(.2rem); .m(0); .lh(.28rem);}
+        .des{ .fs(.24rem); .llh(.24rem); .pb(.1rem); width:100%; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;}
+    }
+    .sdk-info{
+        .c(#9b9b9b); .pb(.32rem);.fs(.2rem); .llh(.2rem);
+        span{
+            .inline_block;
+            &:first-child{ .mr(.2rem); }
+        }
+    }
+    .detail{
+        .llh(.24rem);
+        .price{
+            .fs(.24rem); .c(#d00024); .mr(.1rem); .fl;
+        }
+        .ori_price{
+            .fl; .fs(.18rem); .c(#9b9b9b);
+        }
+        .sale{
+            .fr;
+        }
+    }
+    .share-info{
+        .llh(.32rem); .p(.24rem 0 0 0); .mt(.22rem); .fs(.2rem); border-top: 1px solid #dadada;
+        &>span{
+            .fr; .ml(.15rem);
+        }
+        &>span:first-child{
+            .fl;
+        }
+        .button{
+            .p(.05rem .2rem); border:1px solid #115586; .c(#115586);
+        }
+        .text{ .mr(.1rem); }
+    }
+    .icon{
+        >span{
+            .fl;
+            &:first-child{
+                .mr(.05rem);
+            }
+        }
+    }
+    >.title{
+        .c(#a39b9b); .fs(.24rem); .pb(.24rem); .pt(.13rem); border-bottom: 1px solid #dadada;
+        .status{
+            .fr; .llh(.24rem); .fs(.21rem); .inline_block; .c(#115586);
+        }
+    }
+    .content{
+        .p(.2rem 0);
+        .buy-count{
+            .fs(.2rem);
+        }
+    }
+
+}

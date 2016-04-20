@@ -1,0 +1,2 @@
+/*! my-project-name 2016-02-11 */
+CKEDITOR.editorConfig=function(a){var b="/image/upload";a.filebrowserImageUploadUrl=b,a.extraPlugins="image",a.simpleuploads_acceptedExtensions="gif|jpeg|jpg|pdf|png",a.extraAllowedContent="h3 blockquote ul li"};

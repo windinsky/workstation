@@ -1,0 +1,93 @@
+@import '../global.less';
+@import './block.less';
+body{
+    .c(#333);
+}
+.top , .photos , .rates , .sdk{
+    margin:0 .2rem;
+}
+.clearfix{
+    overflow:hidden;
+}
+.top{
+    .avatar{
+        .fl; .w(.68rem);.h(.68rem); .br(100%); background-size:100%; .mt(.23rem);
+    }
+    .info{
+        .pt(.2rem); .ml(.2rem); .fl; .w(5.1rem);
+        .nick-name{
+            .fs(.3rem); .pb(.16rem); .m(0); .llh(.3rem);
+        }
+        .comment{
+            .fs(.24rem); .lh(.33rem);
+        }
+    }
+}
+.photos{
+    .mt(.2rem);
+    .photo{
+        .w(2.92rem); .h(4.46rem); background-size:cover; border:1px solid white; .fl; background-repeat:no-repeat; overflow:hidden; .bc(white);
+        background-position:center;
+        &:first-child{
+            .mr(.08rem);
+        }
+        .tag{
+            .bi('before.png'); background-size:cover; .w(.8rem); .h(.8rem); opacity:.7;
+        }
+        &.after .tag{
+            .bi('after.png');
+        }
+    }
+}
+.rates{
+    .mt(.2rem);
+    .text{
+        .fs(.3rem);.pb(.2rem); border-bottom:1px solid #e1e1e1; .m(0)
+    }
+    &> div{
+        .fs(.24rem); .c(#9b9b9b); .p( .15rem 0 );
+        overflow:hidden;
+        >span{
+            .inline_block;
+            .lh(.45rem);
+            .fl;
+            &:first-child{
+                .mr(.5rem);
+            }
+        }
+    }
+}
+.sdk{
+    .p(.2rem 0);
+    .pic{
+        .w(1.6rem); .h(1.6rem); .fl; background-size:cover; background-repeat:no-repeat;
+    }
+    .right{
+        .fl; .w(4.1rem); .ml(.3rem); .pt(.01rem);
+        .title{ .fs(.28rem); .pb(.2rem); .m(0); .lh(.28rem);}
+        .des{ .fs(.24rem); .llh(.24rem); .pb(.1rem); width:100%; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;}
+    }
+    .info{
+        .c(#9b9b9b); .pb(.32rem);.fs(.2rem); .llh(.2rem);
+        span{
+            .inline_block;
+            &:first-child{ .mr(.2rem); }
+        }
+    }
+    .detail{
+        .llh(.24rem);
+        .price{
+            .fs(.24rem); .c(#d00024); .mr(.1rem); .fl;
+        }
+        .ori_price{
+            .fl; .fs(.18rem); .c(#9b9b9b);
+        }
+        .sale{
+            .fr;
+        }
+    }
+}
+
+.divid{ ._divid; }
+.stars{ ._stars; }
+

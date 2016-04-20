@@ -1,0 +1,2 @@
+/*! my-project-name 2016-03-11 */
+windinsky.define("lib/serializeObject",["jquery"],function(a){var b=a("jquery");b.fn.serializeObject=function(){"use strict";var a={},c=function(c,d){var e=a[d.name];"undefined"!=typeof e&&null!==e?b.isArray(e)?e.push(d.value):a[d.name]=[e,d.value]:a[d.name]=d.value};return b.each(this.serializeArray(),c),a}});

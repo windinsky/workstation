@@ -1,0 +1,49 @@
+<%- include('../wap_head.html',{locals:locals}); %>
+<div class="top clearfix">
+    <div class="avatar" style="background-image:url(<%= data.user.avatar %>)"></div>
+    <div class="info">
+        <div class="nick-name"><%= data.user.nick_name %></div>
+        <div class="comment"><%= data.comment %></div>
+    </div>
+</div>
+<div class="photos clearfix">
+    <div class="photo" style="background-image:url(<%= data.before %>)">
+        <div class="tag"></div>
+    </div>
+    <div class="photo after" style="background-image:url(<%=  data.after %>)">
+        <div class="tag"></div>
+    </div>
+</div>
+<div class="rates">
+    <p class="text">项目体验满意度</p>
+    <% var rates = data.rates.split(',').map( function( r ){ return parseInt(r); } );%>
+    <% ['术后效果' , '安全靠谱' , '价格公道'].forEach( function( text , j ){ %>
+    <div class="rate">
+        <span><%= text %></span>
+        <% for(var i = 0 ; i < 5 ; i++ ){ %>
+        <span class="stars <%= i >= rates[j] ? '' : 'active' %>"></span>
+        <% } %>
+    </div>
+    <% }); %>
+</div>
+<div class="divid"></div>
+<% data.sdks.forEach( function( s ){ %>
+<div class="sdk clearfix">
+    <div class="pic" style="background-image:url(<%= s.pic %>)"></div>
+    <div class="right">
+        <div class="title"><%= s.name %></div>
+        <div class="des"><%= s.description %></div>
+        <div class="info">
+            <span><%= s.doctor %></span>
+            <% if( s.hospital ){ %><span><%= s.hospital %></span><% } %>
+        </div>
+        <div class="detail clearfix">
+            <span class="price">￥<%= s.price %></span>
+            <span class="ori_price">医院价：￥<del><%= s.ori_price %><del></span>
+            <span class="sale">销量：<%= s.sale %></span>
+        </div>
+    </div>
+</div>
+<div class="divid"></div>
+<% }); %>
+<%- include('../wap_foot.html',{locals:locals}); %>

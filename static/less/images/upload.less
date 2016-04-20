@@ -1,0 +1,26 @@
+@import '../global.less';
+#masker{
+	.w(100%);.h(100%);.bc(rgba(0,0,0,.4)); .pf; top:0;left:0; .hidden; z-index:100;
+}
+#progress{ .hidden; .p(20px); .pf; left:50%; .w(400px); .ml(-200px); top:10%; .bc(white); .fs(12px); box-shadow: 0 0 3px gray; z-index:101;
+	.close{
+		.pa; right:-10px;top:-10px;.bc(black);.b(1px solid silver);.br(50%); color:white; .w(20px); .llh(20px); .inline_block; text-decoration:none; .tc;
+	}
+	table{ border-collapse:collapse;border-spacing:0;
+		tbody{
+			tr:first-child{
+				td{border-top:none;}
+			}
+			tr{
+				td{border-top:1px solid silver;.p(10px 0);}
+				td:first-child{ .w(100px); }
+				td:last-child{ .w(300px);
+					>div{ .auto; .h(2px); overflow:hidde; .w(80%); .bc(gray);
+						>div{ .w(0); .bc(skyblue); .h(2px);}
+					}
+				}
+			}
+		}
+	}
+	
+}

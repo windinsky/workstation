@@ -1,0 +1,2 @@
+/*! my-project-name 2016-03-11 */
+function EventEmitter(){this.events={}}EventEmitter.prototype={once:function(a,b){return this.events[a]||(this.events[a]=[]),this.events[a].unshift({remain:1,fn:b}),this},on:function(a,b){return this.events[a]||(this.events[a]=[]),this.events[a].unshift({remain:1/0,fn:b}),this},emit:function(a,b){var c=this.events[a];if(c)for(var d=0;d<c.length;d++){var e=c[d];e.fn(b),e.remain--,0===e.remain&&(this.events[a].splice(d,1),d--)}}};

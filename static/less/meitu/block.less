@@ -1,0 +1,41 @@
+@import '../global.less';
+
+._stars(){
+    .inline_block;
+    .w(.49rem);
+    .h(.49rem);
+    background-size:.5rem;
+    .bi("star.png");
+    .bc(silver);
+    background-repeat-y : no-repeat;
+    &.active{
+        .bc(#ffc400);
+    }
+}
+._divid(){
+    .h(.24rem); .bc(#f0f0f0); .b(1px solid #dadada);
+    border-left:0;border-right:0;
+}
+._icon(){
+
+    .share-icon,.cart-icon,.score-icon,.help-icon{
+        .bi("icon.png");
+        .inline_block;
+        .w(.32rem);
+        .h(.32rem);
+        background-size:1.74rem;
+        background-repeat:no-repeat;
+        background-position:0rem 50%;
+    }
+    .cart-icon{
+        background-position:-.46rem 50%;
+    }
+    .score-icon{
+        background-position:-.97rem 50%;
+    }
+    .help-icon{
+        background-position:-1.46rem 50%;
+
+    }
+
+}

@@ -1,0 +1,124 @@
+@import '../global.less';
+
+body, html{
+	height:100%;
+background:#363e5b;
+}
+.container{
+	.w( 70% ); .h( 50% ); .m( auto ); 
+    min-height: 350px;
+    svg{
+        margin-top:20%;
+    }
+}
+
+.__chart_bar{
+    .block;
+    &:hover{
+        path , line{
+            stroke-width : 2;
+            stroke : rgb( 100 , 110 , 130 );
+        }
+        .tick{
+            line{
+                stroke-width: 1;
+                opacity:.7;
+            }
+        }
+        .grid{
+            path , line{
+                stroke-width: 1;
+                stroke: rgb( 81 , 88 , 115 )
+            }
+        }
+        .line{
+            fill: inherit;
+            stroke-width: 1;
+            opacity: .5;
+            stroke : rgb( 88 , 255 , 232 );
+        }
+    
+    }
+    .x.axis{
+        text{
+            padding-top:4px;
+        }
+    }
+    
+    path,line{
+        stroke-width: 2;
+        fill:none;
+        stroke : rgb( 81 , 88 , 115 );
+        shape-rendering: crispEdges;
+    }
+
+    text{
+        font-family: sans-serif;
+        fill : silver;
+        font-size: 11px;
+    }
+    .tick{
+        line{
+            stroke-width: 1;
+            opacity:.2;
+        }
+    }
+    .bar{
+        opacity : .7;
+        &:hover{
+            opacity : 1;
+        }
+    }
+    .points{
+        &.hide{
+            opacity:0;
+        }
+    }
+    .point{
+        stroke-width: 10;
+        fill : deepskyblue;
+        stroke : rgba( 0 , 0 , 0, 0 );
+        transform: scale( 1 , 1 );
+        transition : all .5s;
+        &:hover{
+            transform: scale( 2 , 2 );
+        }
+    }
+    .lines{
+        fill:red;
+        opacity:.5;
+        &.hide{
+            opacity:0;
+        }
+    }
+    .line{
+        fill : none;
+        stroke-width : 1;
+        stroke : rgb( 88 , 255 , 232 );
+        opacity : .2;
+        transition : all .5s;
+        &:hover{
+            stroke: aqua;
+            stroke-width:2;
+        }
+    }
+    .bars{
+        &.hide{
+            opacity:0;
+        }
+    }
+
+    .labels{
+        &.hide{
+            opacity:0;
+        }
+    }
+
+
+}
+
+.__chart_bar path,
+.__chart_bar line {
+    stroke: rgb(81, 88, 115);;
+    shape-rendering: crispEdges;
+}

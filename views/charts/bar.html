@@ -1,0 +1,55 @@
+<%- include('../head.html',{locals:locals}); %>
+
+	<div class="container" id="container"></div>
+    <button id="add_one_value">加一个数据</button>
+    <button id="add_set_value">加一组数据</button>
+    <button id="remove_set_value">删除一组数据</button>
+
+<script>
+	windinsky.use( [ 'charts/bar' , 'jquery' ] , function( require ){
+
+        var $ = this['jquery'];
+
+        $(window).resize( function(){
+            bar.refresh();
+        });
+
+        var Bar = this['charts/bar'];
+        window.bar = new Bar('#container');
+        bar.add_data_set([['1985',4],['1986',2],['1987',5],['1988',1]]);
+        bar.render();
+        var $ = this['jquery'];
+        function generateData(){
+            //var len = Math.max( parseInt( Math.random()*30 ) , 10 );
+            var len;
+            if( !bar.data.length ) len = 8;
+            else len = bar.data[0].length;
+            var arr = [];
+            while( len ){
+                arr.push( parseInt( Math.random()*50 ) );
+                len--;
+            }
+            return arr;
+
+        }
+        $('#add_one_value').click(function(){
+            var arr = [];
+            for( var i = 0 ; i < bar.data.length ; i++){
+                arr.push( [ ( 1985 + bar.data[0].length ).toString() , parseInt( Math.random()*50 ) ] );
+            }
+            bar.append_datas( arr );
+            bar.refresh();
+        })
+        $('#add_set_value').click(function(){
+            var arr = generateData();
+            bar.add_data_set( arr );
+            bar.refresh();
+        })
+        $('#remove_set_value').click(function(){
+            bar.remove_data_set( 0 );
+            bar.refresh();
+        })
+    
+    });
+</script>
+<%- include('../foot.html',{locals:locals}); %>

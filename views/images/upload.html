@@ -1,0 +1,32 @@
+<%- include('../head.html',{locals:locals}); %>
+	<form action="/image/upload" method="post" enctype="multipart/form-data">
+		<input id="file" type="file" name="upload" multiple/>
+	</form>
+	<div id="masker"></div>
+	<div id="progress">
+		<a href="javascript:;" class="close">X</a>
+		<table>
+			<tbody>
+				<tr>
+					<td>123.jpg</td>
+					<td>
+						<div>
+							<div style="width:50%"></div>
+						</div>
+					</td>
+				</tr>
+				<tr>
+					<td>123.jpg</td>
+					<td>
+						<div>
+							<div style="width:50%"></div>
+						</div>
+					</td>
+				</tr>
+			</tbody>
+		</table>
+	</div>
+	<script>
+		windinsky.use('images/upload');
+	</script>
+<%- include('../foot.html',{locals:locals}); %>

@@ -1,0 +1,55 @@
+<%- include('../head.html',{locals:locals}); %>
+
+	<div class="container" id="container"></div>
+    <button id="add_one_value">加一个数据</button>
+    <button id="add_set_value">加一组数据</button>
+    <button id="remove_set_value">删除一组数据</button>
+
+<script>
+	windinsky.use( [ 'charts/pie' , 'jquery' ] , function( require ){
+
+        var $ = this['jquery'];
+
+        $(window).resize( function(){
+            pie.refresh();
+        });
+
+        var Pie = this['charts/pie'];
+        window.pie = new Pie('#container');
+        pie.add_data_set([['1985',4],['1986',2],['1987',5],['1988',1]]);
+        pie.render();
+        var $ = this['jquery'];
+        function generateData(){
+            //var len = Math.max( parseInt( Math.random()*30 ) , 10 );
+            var len;
+            if( !pie.data.length ) len = 8;
+            else len = pie.data[0].length;
+            var arr = [];
+            while( len ){
+                arr.push( parseInt( Math.random()*50 ) );
+                len--;
+            }
+            return arr;
+
+        }
+        $('#add_one_value').click(function(){
+            var arr = [];
+            for( var i = 0 ; i < pie.data.length ; i++){
+                arr.push( [ ( 1985 + pie.data[0].length ).toString() , parseInt( Math.random()*50 ) ] );
+            }
+            pie.append_datas( arr );
+            pie.refresh();
+        })
+        $('#add_set_value').click(function(){
+            var arr = generateData();
+            pie.add_data_set( arr );
+            pie.refresh();
+        })
+        $('#remove_set_value').click(function(){
+            pie.remove_data_set( 0 );
+            pie.refresh();
+        })
+    
+    });
+</script>
+<%- include('../foot.html',{locals:locals}); %>

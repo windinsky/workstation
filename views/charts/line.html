@@ -1,0 +1,54 @@
+<%- include('../head.html',{locals:locals}); %>
+
+	<div class="container" id="container"></div>
+    <button id="add_one_value">加一个数据</button>
+    <button id="add_set_value">加一组数据</button>
+    <button id="remove_set_value">删除一组数据</button>
+
+<script>
+	windinsky.use( [ 'charts/line' ] , function( require ){
+
+        var Line = this['charts/line'];
+        window.line = new Line('#container',{});
+        line.add_data_set([4, 5, 4, 3, 5, 1, 3, 9]);
+        line.append_datas( [7] );
+        //line.append_datas( [7] );
+        line.render();
+        var $ = this['jquery'];
+        $(window).resize( function(){
+            line.refresh();
+        });
+        function generateData(){
+            //var len = Math.max( parseInt( Math.random()*30 ) , 10 );
+            var len;
+            if( !line.data.length ) len = 8;
+            else len = line.data[0].length;
+            var arr = [];
+            while( len ){
+                arr.push( parseInt( Math.random()*50 ) );
+                len--;
+            }
+            return arr;
+
+        }
+        $('#add_one_value').click(function(){
+            var arr = [];
+            for( var i = 0 ; i < line.data.length ; i++){
+                arr.push( parseInt( Math.random()*50 ) );
+            }
+            line.append_datas( arr );
+            line.refresh();
+        })
+        $('#add_set_value').click(function(){
+            var arr = generateData();
+            line.add_data_set( arr );
+            line.refresh();
+        })
+        $('#remove_set_value').click(function(){
+            line.remove_data_set( 0 );
+            line.refresh();
+        })
+    
+    });
+</script>
+<%- include('../foot.html',{locals:locals}); %>

@@ -1,0 +1,61 @@
+<%- include('../wap_head.html',{locals:locals}); %>
+<% data.caselist.forEach( function( s ){ %>
+<div class="sdk clearfix">
+    <div class="case-info clearfix">
+        <div class="avatar" style="background-image:url(<%= data.user.avatar %>)"></div>
+        <div class="info clearfix">
+            <div class="nick-name"><%= data.user.nick_name %><span class="share-icon"></span></div>
+            <div class="comment"><%= s.comment %></div>
+            <div class="photos clearfix">
+                <% s.pic_before.forEach( function(p){ %>
+                <div class="photo" style="background-image:url(<%= p %>)">
+                    <div class="tag"></div>
+                </div>
+                <% }); %>
+                <% s.pic_after.forEach( function(p){ %>
+                <div class="photo" style="background-image:url(<%=  p %>)">
+                    <div class="tag"></div>
+                </div>
+                <% }); %>
+            </div>
+        </div>
+    </div>
+    <div class="share-info">
+        <span class="clearfix icon"><%= s.share_info %></span>
+        <span class="clearfix icon"><span class="score-icon"></span><span><%= s.scores %></span></span>
+        <span class="clearfix icon"><span class="cart-icon"></span><span><%= s.cart_num %></span></span>
+        <span class="clearfix icon"><span class="share-icon"></span><span><%= s.share_num %></span></span>
+    </div>
+</div>
+<div class="divid"></div>
+<% }); %>
+<% data.orderlist.forEach( function(s){ %>
+<div class="sdk clearfix">
+    <div class="title">
+        <span>订单号&nbsp;&nbsp;<%= s.order_id %></span>
+        <span class="status">已完成</span>
+    </div>
+    <div class="content clearfix">
+        <div class="pic" style="background-image:url(<%= s.pic %>)"></div>
+        <div class="right">
+            <div class="title"><%= s.name %></div>
+            <div class="des"><%= s.description %></div>
+            <div class="sdk-info">
+                <span><%= s.doctor %></span>
+                <% if( s.hospital ){ %><span><%= s.hospital %></span><% } %>
+            </div>
+            <div class="detail clearfix">
+                <span class="price">￥<%= s.price %></span>
+                <span class="buy-count">x<%= s.buy_num %></span>
+            </div>
+        </div>
+    </div>
+    <div class="share-info">
+        <span class="text"><%= s.share_info %></span><a href="javascript:;" class="help-icon"></a>
+        <span class="button"><%= s.makecase_button_title %></span>
+    </div>
+</div>
+
+<% }); %>
+<div class="divid"></div>
+<%- include('../wap_foot.html',{locals:locals}); %>

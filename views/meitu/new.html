@@ -1,0 +1,50 @@
+<%- include('../wap_head.html',{locals:locals}); %>
+<div class="top">
+    <p>我的照片</p>
+    <div class="photos">
+        <div id="before" class="photo"><span>+</span></div>
+        <div id="after" class="photo"><span>+</span></div>
+    </div>    
+    <p>
+        <input name="photo" type="radio" id="only_after_op"/><label for="only_after_op">术后照片</label>
+        <input checked name="photo" type="radio" id="before_and_after"/><label for="before_and_after">前后对比照</label>
+    </p>
+</div>
+<div class="divid"></div>
+<div class="rates">
+    <p class="text">我的打分</p>
+    <div class="rate">
+        <span>术后效果</span>
+        <span class="stars"></span>
+        <span class="stars"></span>
+        <span class="stars"></span>
+        <span class="stars"></span>
+        <span class="stars"></span>
+    </div>
+    <div class="rate">
+        <span>术后效果</span>
+        <span class="stars"></span>
+        <span class="stars"></span>
+        <span class="stars"></span>
+        <span class="stars"></span>
+        <span class="stars"></span>
+    </div>
+    <div class="rate">
+        <span>术后效果</span>
+        <span class="stars"></span>
+        <span class="stars"></span>
+        <span class="stars"></span>
+        <span class="stars"></span>
+        <span class="stars"></span>
+    </div>
+</div>
+<div class="divid"></div>
+<div class="comments">
+    <p class="text">我的点评</p>
+    <textarea id="comment" placeholder="快来说说本次美途体验吧"></textarea>
+</div>
+<a id="submit" href="javascript:;" class="submit">提交</a>
+<script>
+    windinsky.use( 'meitu/new' );
+</script>
+<%- include('../wap_foot.html',{locals:locals}); %>

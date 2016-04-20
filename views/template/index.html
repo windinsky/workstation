@@ -1,0 +1,53 @@
+
+<%- include('../head.html',{locals:locals}); %>
+	<div class="left">
+		<div>
+			<form action="/image/upload" method="post" enctype="multipart/form-data">
+				<input id="file" type="file" name="upload"/>
+				<label for="platform">平台</label>
+				<select id="platform">
+					<option value="wap">wap</option>
+					<option value="pc">pc</option>
+				</select>
+				<input id="save" type="button" value="保存"/>
+				<span style="color:red">选择完文件直接拖框框就行了，d键删除，command+z或者ctrl+z撤销删除</span>
+			</form>
+		</div>
+		<div>
+			<input type="button" id="add_v_line" value="添加纵向参考线"/>
+			<input type="button" id="add_h_line" value="添加横向参考线"/>
+			<input type="button" id="lock_line" value="编辑热区"/>
+			<input type="button" id="clear_line" value="清除参考线">
+		</div>
+	</div>
+	<div class="right">
+		<div id="canvas"><img style="display:none"/></div>
+	<div>
+	<div id="masker"></div>
+	<div id="progress">
+		<a href="javascript:;" class="close">X</a>
+		<table>
+			<tbody>
+				<tr>
+					<td>123.jpg</td>
+					<td>
+						<div>
+							<div style="width:50%"></div>
+						</div>
+					</td>
+				</tr>
+				<tr>
+					<td>123.jpg</td>
+					<td>
+						<div>
+							<div style="width:50%"></div>
+						</div>
+					</td>
+				</tr>
+			</tbody>
+		</table>
+	</div>
+	<script>
+		windinsky.use('template/index');
+	</script>
+<%- include('../foot.html',{locals:locals}); %>
